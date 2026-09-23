@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  # Dispatched by merge-on-approval, since merges made with GITHUB_TOKEN
+  # don't trigger push events.
+  workflow_dispatch:
 
 permissions:
   contents: write

@@ -34,8 +34,12 @@ pi --extension ./index.ts
 - `index.ts` — Main extension entry point
 - `package.json` — Pi package manifest
 
-## Releasing
+## Contributing & releasing
 
-Versioning is automated with [release-please](https://github.com/googleapis/release-please). Use [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `feat!:` / `BREAKING CHANGE:`, `chore:`, …) when merging to `main`. release-please keeps a release PR open that bumps `package.json`, updates `CHANGELOG.md`, and creates a GitHub release + `vX.Y.Z` tag when merged.
+`main` is protected: changes land through pull requests that need **1 approval**, and history is kept linear. PRs are **rebase-merged** automatically as soon as they are approved (see `.github/workflows/merge-on-approval.yml`).
+
+Versioning is automated with [release-please](https://github.com/googleapis/release-please). Because PRs are rebase-merged, **every commit** lands on `main` as-is, so each commit message must follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `feat!:` / `BREAKING CHANGE:`, `chore:`, …). Clean up your branch (e.g. `git rebase -i`) before requesting review.
+
+release-please keeps a release PR open that bumps `package.json` and updates `CHANGELOG.md`. Approving that PR merges it and creates a GitHub release and `vX.Y.Z` tag.
 
 While the version is `< 1.0.0`, breaking changes bump the minor version and features bump the patch version.

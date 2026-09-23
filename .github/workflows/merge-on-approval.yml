@@ -1,0 +1,47 @@
+name: merge-on-approval
+
+# Rebase-merges a pull request as soon as it receives an approving review.
+# Branch protection on main still enforces the approval requirement; this
+# workflow only removes the manual "click merge" step.
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: merge-on-approval-${{ github.event.pull_request.number }}
+
+jobs:
+  merge:
+    if: >-
+      github.event.review.state == 'approved' &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Rebase-merge the approved commit
+        # --auto merges immediately when all requirements are met, otherwise
+        # enables auto-merge (e.g. while required checks are still running).
+        # --match-head-commit ensures we only merge exactly what was approved.
+        run: gh pr merge "$PR" --rebase --auto --match-head-commit "$HEAD_SHA"
+
+      - name: Trigger release-please
+        # Merges performed with GITHUB_TOKEN do not fire `push` workflows,
+        # so dispatch release-please explicitly once the PR is merged.
+        run: |
+          state=$(gh pr view "$PR" --json state -q .state)
+          echo "PR #$PR state: $state"
+          if [ "$state" = "MERGED" ]; then
+            gh workflow run release-please.yml --ref main
+          fi
