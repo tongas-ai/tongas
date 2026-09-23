@@ -33,3 +33,9 @@ pi --extension ./index.ts
 
 - `index.ts` — Main extension entry point
 - `package.json` — Pi package manifest
+
+## Releasing
+
+Versioning is automated with [release-please](https://github.com/googleapis/release-please). Use [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `feat!:` / `BREAKING CHANGE:`, `chore:`, …) when merging to `main`. release-please keeps a release PR open that bumps `package.json`, updates `CHANGELOG.md`, and creates a GitHub release + `vX.Y.Z` tag when merged.
+
+While the version is `< 1.0.0`, breaking changes bump the minor version and features bump the patch version.
