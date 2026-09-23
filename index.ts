@@ -8,7 +8,10 @@
  * - Session-scoped state that survives forks/branches
  */
 
-import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import type {
+  ExtensionAPI,
+  ExtensionContext,
+} from "@earendil-works/pi-coding-agent";
 
 const ENTRY_TYPE = "tongas_state";
 const STATUS_KEY = "tongas-status";
@@ -71,7 +74,9 @@ export default function tongasExtension(pi: ExtensionAPI) {
     getArgumentCompletions: (prefix) => {
       const opts = ["on", "off"];
       const filtered = opts.filter((o) => o.startsWith(prefix));
-      return filtered.length > 0 ? filtered.map((s) => ({ value: s, label: s })) : null;
+      return filtered.length > 0
+        ? filtered.map((s) => ({ value: s, label: s }))
+        : null;
     },
     handler: async (args, ctx) => {
       const trimmed = args.trim().toLowerCase();
@@ -85,7 +90,10 @@ export default function tongasExtension(pi: ExtensionAPI) {
         currentState = { active: true, activatedAt: Date.now() };
         persistState(pi);
         updateStatus(ctx);
-        ctx.ui.notify(`${theme.fg("accent", "Tongas ON")} — what are we working on today?`, "info");
+        ctx.ui.notify(
+          `${theme.fg("accent", "Tongas ON")} — what are we working on today?`,
+          "info",
+        );
         return;
       }
 
@@ -106,7 +114,10 @@ export default function tongasExtension(pi: ExtensionAPI) {
         const since = currentState.activatedAt
           ? new Date(currentState.activatedAt).toLocaleTimeString()
           : "unknown";
-        ctx.ui.notify(`${theme.fg("accent", "Tongas is ON")} (since ${since})`, "info");
+        ctx.ui.notify(
+          `${theme.fg("accent", "Tongas is ON")} (since ${since})`,
+          "info",
+        );
       } else {
         ctx.ui.notify(`${theme.fg("dim", "Tongas is OFF")}`, "info");
       }
