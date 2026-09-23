@@ -17,11 +17,11 @@ pi --extension ./index.ts
 
 ## Commands
 
-| Command      | Description                          |
-|--------------|--------------------------------------|
-| `/tongas on` | Activate tongas curation mode        |
-| `/tongas off`| Deactivate tongas curation mode      |
-| `/tongas`    | Show current tongas status           |
+| Command       | Description                     |
+| ------------- | ------------------------------- |
+| `/tongas on`  | Activate tongas curation mode   |
+| `/tongas off` | Deactivate tongas curation mode |
+| `/tongas`     | Show current tongas status      |
 
 ## Features
 
