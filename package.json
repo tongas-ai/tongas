@@ -1,0 +1,17 @@
+{
+  "name": "tongas",
+  "version": "0.1.0",
+  "description": "A curated agent experience focusing on human-agent socratic collaboration",
+  "type": "module",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*",
+    "@earendil-works/pi-ai": "*",
+    "typebox": "*"
+  }
+}
